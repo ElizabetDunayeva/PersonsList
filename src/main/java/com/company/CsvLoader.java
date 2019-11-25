@@ -1,15 +1,17 @@
 package com.company;
 
+
 import org.joda.time.LocalDate;
-import org.supercsv.io.CsvBeanReader;
-import org.supercsv.io.ICsvBeanReader;
-import org.supercsv.prefs.CsvPreference;
+import org.joda.time.format.DateTimeFormat;
+
 import au.com.bytecode.opencsv.CSVReader;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.format.DateTimeFormatter;
+import  org.joda.time.format.DateTimeFormatter;
+
+
 
 public class CsvLoader {
 
@@ -21,22 +23,26 @@ public class CsvLoader {
         while((nextLine = reader.readNext())!= null){
             int id;
             String firstName;
-            String lastName;
             Gender gender;
             LocalDate date;
             IDivision division;
             BigDecimal salary;
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy");
+           // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy");
+           DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.mm.yyyy");
             id = Integer.parseInt(nextLine[0]);
             firstName = nextLine[1];
-            lastName = nextLine[1];
             if(nextLine[2].compareTo("Male")>0){
                 gender = Gender.MALE;
 
             }else {
                 gender = Gender.FEMALE;
             }
+            date =  LocalDate.parse(nextLine[3],formatter);
+            salary = new  BigDecimal(nextLine[5]);
             division = checkArrayDivision(nextLine[4]);
+            Person person = new Person();
+            person.SetPerson(id,firstName,gender,date,salary);
+            base.add(person);
         }
     }
     static private IDivision checkArrayDivision(String divisionName){

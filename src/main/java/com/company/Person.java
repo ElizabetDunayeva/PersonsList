@@ -2,8 +2,10 @@ package com.company;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
+import org.joda.time.format.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
@@ -27,11 +29,11 @@ public class Person implements IPerson  {
      * @param ID int number
      * @param birthday date as YYYY-MM-DD
      */
-   final public void SetPerson(final Integer ID,final String name, final Gender pol, final  String birthday,final BigDecimal salary) {
+   final public void SetPerson(final Integer ID,final String name, final Gender pol, final  LocalDate birthday,final BigDecimal salary) {
         this.firstname = name;
         this.pol = pol;
         this.ID = ID;
-        this.birthday = LocalDate.parse(birthday);
+        this.birthday = birthday;
         this.salary = salary;
     }
 

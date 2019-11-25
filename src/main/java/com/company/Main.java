@@ -1,19 +1,20 @@
 package com.company;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
+import java.io.IOException;
 
 import java.math.BigDecimal;
 
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
     	Person A = new Person();
     	Person B = new Person();
     	Person C = new Person();
-    	A.SetPerson(12365,"Elizabet", Gender.FEMALE,"2000-08-05", BigDecimal.valueOf(3400));
-    	B.SetPerson(4380,"Ann", Gender.FEMALE,"1995-09-01", BigDecimal.valueOf(3400));
-		C.SetPerson(6401,"Andre", Gender.MALE,"2005-08-05", BigDecimal.valueOf(3400));
+    	A.SetPerson(12365,"Elizabet", Gender.FEMALE,LocalDate.parse("2000-08-05"), BigDecimal.valueOf(3400));
+    	B.SetPerson(4380,"Ann", Gender.FEMALE,LocalDate.parse("1995-09-01"), BigDecimal.valueOf(3400));
+		C.SetPerson(6401,"Andre", Gender.MALE,LocalDate.parse("2005-08-05"), BigDecimal.valueOf(3400));
 	//Person A = new Person(12365,"Elizabet", Gender.FEMALE,"2000-08-05", BigDecimal.valueOf(3400));
 	//Person B = new Person(4380,"Ann", Gender.FEMALE,"1995-09-01", BigDecimal.valueOf(3400));
 	//Person C  = new Person(6401,"Andre", Gender.MALE,"2005-08-05", BigDecimal.valueOf(3400));
@@ -36,6 +37,9 @@ public class Main {
 	div1.setName("GG");
 	A.setDivision(div1);
 	A.getDivision();
+	MyList list2 = new MyList();
+	CsvLoader.parseList(list2);
+	list2.getPersonsData();
 
 
 
