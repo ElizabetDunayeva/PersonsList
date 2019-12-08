@@ -1,10 +1,8 @@
-package com.company;
+package com.company.repository;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
-
-import com.company.IPerson;
 
 public interface IRepository <T>{
 

@@ -1,7 +1,6 @@
-package com.company;
+package com.company.Entities;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 
 import org.joda.time.LocalDate;
 

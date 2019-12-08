@@ -1,6 +1,14 @@
 package com.company;
+import com.company.Entities.Division;
+import com.company.Entities.Gender;
+import com.company.Entities.IPerson;
+import com.company.Entities.Person;
+import com.company.repository.IPersonRepository;
+import com.company.repository.IRepository;
+import com.company.repository.MyList;
+import com.company.factory.Factory;
 import org.joda.time.LocalDate;
-import org.joda.time.Years;
+
 import java.io.IOException;
 
 import java.math.BigDecimal;
@@ -37,9 +45,12 @@ public class Main {
 	div1.setName("GG");
 	A.setDivision(div1);
 	A.getDivision();
-	MyList list2 = new MyList();
-	CsvLoader.parseList(list2);
-	list2.getPersonsData();
+	//MyList list2 = new MyList();
+		Factory factory = new Factory();
+		IRepository<IPerson> list =  factory.createRepository(IPerson.class );
+	CsvLoader.parseList(list);
+	MyList<IPerson>base = (MyList<IPerson>)list;
+	base.getPersonsData();
 
 
 

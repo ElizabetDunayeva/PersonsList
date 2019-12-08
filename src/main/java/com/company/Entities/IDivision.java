@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Entities;
 
 public interface IDivision {
     public Integer getId();

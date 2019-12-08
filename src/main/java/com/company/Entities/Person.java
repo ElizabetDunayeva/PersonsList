@@ -1,17 +1,15 @@
-package com.company;
+package com.company.Entities;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
-import org.joda.time.format.DateTimeFormat;
 
 import java.math.BigDecimal;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 
 
-public class Person implements IPerson  {
+public class Person implements IPerson {
 
     String firstname;
     String lastname;
@@ -20,7 +18,7 @@ public class Person implements IPerson  {
     LocalDate birthday;
     BigDecimal salary;
     IDivision division;
-    static final List<IDivision> allDivision = new ArrayList<>();
+    public static final List<IDivision> allDivision = new ArrayList<>();
 
     /**
      *
@@ -76,7 +74,7 @@ public class Person implements IPerson  {
 
 
     public Integer getId() {
-        return ID;
+        return this.ID;
     }
 
 
@@ -149,6 +147,11 @@ public class Person implements IPerson  {
                  && birthday.equals(person.birthday));
 
     }
+    @Override
+   public  String toString(){
+        return this.ID.toString()+ " \n" + this.firstname.toString() + "\n" + this.getAge().toString();
+   }
+
 
 
 

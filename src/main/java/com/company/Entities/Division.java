@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Entities;
 
 public class Division implements IDivision {
     Integer id;

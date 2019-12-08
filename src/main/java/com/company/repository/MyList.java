@@ -1,4 +1,9 @@
-package com.company;
+package com.company.repository;
+
+import com.company.InjectException;
+import com.company.Injector;
+
+import com.company.sort.ISort;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,12 +15,15 @@ import java.util.function.Predicate;
   *  massiv Persons
   * count - number of Persons
  */
-public class MyList<T> implements IRepository<IPerson>,IPersonRepository {
-    private IPerson[] Persons;
+@SuppressWarnings("unchecked")
+
+public class MyList<T> implements IRepository<T> {
+    private T[] Persons ;
     private int count;
+    private ISort<T> sorter;
 
 
-    public IPerson[] getPersons() {
+    public T[] getPersons() {
 
         return Persons;
     }
@@ -28,20 +36,17 @@ public class MyList<T> implements IRepository<IPerson>,IPersonRepository {
      */
     public MyList() {
 
-     Persons = new IPerson[1];
+     Persons = (T[])new Object [1];
      this.count = 0;
 
     }
 
     /**
-     *
-     * @param id identification value  about person by which we search him
-     * @return person with set ID = id
-     */
-    public IPerson getin( int id)   {
+
+    /*public T getin( int id)   {
         int k = 0;
         for (int i = 0; i < count; i++) {
-            if (Persons[i].getId() == id) {
+            if (Persons[i].getId== id) {
                 k += i + 1;
             }
         }
@@ -51,10 +56,10 @@ public class MyList<T> implements IRepository<IPerson>,IPersonRepository {
        // System.out.println("Информация по запрошенному индекcу"+"  "+id);
         getPersonsDataindex(k - 1);
         return Persons[k - 1];
-    }
+    }*/
 
-    public IPerson get(int i) {
-        return Persons[i];
+    public T get(int i) {
+        return (T)Persons[i];
     }
     /**
      * shows all information about all persons in the list
@@ -62,10 +67,8 @@ public class MyList<T> implements IRepository<IPerson>,IPersonRepository {
     public void getPersonsData() {
         for (int i = 0; i < count; i++) {
 
-            System.out.println(Persons[i].getId());
-            System.out.println(Persons[i].getFirstName());
-            System.out.println(Persons[i].getGender());
-            System.out.println(Persons[i].getAge());
+            System.out.println(Persons[i].toString());
+
             System.out.println("-----------------------------------------------");
                     }
 
@@ -81,11 +84,8 @@ public class MyList<T> implements IRepository<IPerson>,IPersonRepository {
            if (i > count + 1) {
                throw new IllegalArgumentException("Такого обьекта нет!");
            }
-            System.out.println(Persons[i].getId());
-            System.out.println(Persons[i].getFirstName());
-            System.out.println(Persons[i].getGender());
-            System.out.println(Persons[i].getAge());
-            System.out.println(Persons[i].getBirthdate());
+            System.out.println(Persons[i]);
+
             System.out.println("-----------------------------------------------");
 
 
@@ -97,13 +97,14 @@ public class MyList<T> implements IRepository<IPerson>,IPersonRepository {
      * @param p1 person which need to be added
      * @return new list  with added person
      */
-    public void add(IPerson p1) {
-
+    @Override
+    public void add(T p1) {
 
         int col = Persons.length;
         count++;
         if (count > Persons.length) {
-            IPerson newPersons[] = new IPerson[2 * col];
+            T newPersons[] = (T[])new Object [2*col] ;
+
             System.arraycopy(Persons, 0, newPersons, 0, Persons.length);
             newPersons[count - 1] = p1;
             Persons = newPersons;
@@ -123,26 +124,19 @@ public class MyList<T> implements IRepository<IPerson>,IPersonRepository {
      * @param id identification value of person (ID)
      * @return new list of persons without person with ID = id
      */
-    public IPerson delete(int id) {
-        int k = 0;
-        for (int i = 0;i < count; i++) {
-            if (Persons[i].getId() == id) {
-                k += i + 1;
-            }
-        }
-        if (k == 0) {
-            throw new IllegalArgumentException("Такого обьекта нет!");
-        }
+    public T delete(int id) {
+
         int col = Persons.length;
         count--;
-        Person newPersons[] = new Person[col];
-        System.arraycopy(Persons, 0, newPersons, 0, k - 1);
-        System.arraycopy(Persons, k, newPersons,  k - 1, Persons.length - k);
+        T newPersons[] = (T[])new Object [col] ;
+
+        System.arraycopy(Persons, 0, newPersons, 0, id );
+        System.arraycopy(Persons, id+1, newPersons,  id , Persons.length - id - 1);
         Persons = newPersons;
 
 
 
-      return Persons[k - 1];
+      return Persons[id ];
 
 
     }
@@ -151,21 +145,26 @@ public class MyList<T> implements IRepository<IPerson>,IPersonRepository {
      * sort by method puzirka. from bigger to smaller
      * @param comp defines field on what would be list sorted
      */
-     public void sortBy(Comparator<IPerson> comp){
-         Sort.bublesort(comp,this);
+    public void sortBy(Comparator<T> comp)  {
+        try {
+        Injector.inject(this);
+        } catch(InjectException e) {
 
-     }
+        }
+        sorter.sort(this,comp);
+
+    }
 
 
 
     //public IPerson set(int index, IPerson person);
 
-     public void add(int index, IPerson person){
+     public void add(int index, T person){
 
          int col = Persons.length;
          count++;
          if (count > Persons.length) {
-             IPerson newPersons[] = new IPerson[2 * col];
+           T newPersons[]  = (T[])new Object [2*col] ;
              System.arraycopy(Persons, 0, newPersons, index-1, index);
              newPersons[index] = person;
              System.arraycopy(Persons, index, newPersons, index+1, Persons.length-index);
@@ -173,7 +172,7 @@ public class MyList<T> implements IRepository<IPerson>,IPersonRepository {
 
 
          } else {
-             IPerson newPersons[] = new IPerson[Persons.length];
+             T newPersons[] = (T[])new Object [Persons.length] ;
              System.arraycopy(Persons, 0, newPersons, index-1, index);
              newPersons[index] = person;
              System.arraycopy(Persons, index, newPersons, index+1, Persons.length-index);
@@ -183,21 +182,21 @@ public class MyList<T> implements IRepository<IPerson>,IPersonRepository {
          }
 
      }
-    public List<IPerson> toList(){
-        ArrayList<IPerson> list = new ArrayList<IPerson>();
+    public List<T> toList(){
+        ArrayList<T> list = new ArrayList<T>();
         for(int i =0;i<count;i++)
             list.add(Persons[i]);
         return list;
     }
 
-    public IPerson set(int index, IPerson person){
-        IPerson temp = Persons[index];
+    public T set(int index, T person){
+        T temp = Persons[index];
         Persons[index] = person;
         return temp ;
     }
-    public IRepository searchBy(Predicate<IPerson> predicate){
+    public IRepository searchBy(Predicate<T> predicate){
         MyList res = new MyList();
-        for (IPerson val : Persons) {
+        for (T val : Persons) {
             if (predicate.test(val))
                 res.add(val);
         }

@@ -1,6 +1,13 @@
 package com.company;
 
 
+import com.company.Entities.Gender;
+import com.company.Entities.IDivision;
+import com.company.Entities.Person;
+import com.company.Entities.IPerson;
+
+import com.company.factory.Factory;
+import com.company.repository.IRepository;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
