@@ -1,28 +1,29 @@
 package com.company;
 import com.company.Entities.Division;
-import com.company.Entities.Gender;
-import com.company.Entities.IPerson;
 import com.company.Entities.Person;
-import com.company.repository.IPersonRepository;
-import com.company.repository.IRepository;
+import com.company.JAXB.JAXBmanager;
 import com.company.repository.MyList;
-import com.company.factory.Factory;
 import org.joda.time.LocalDate;
+import ru.vsu.lab.entities.enums.Gender;
+
 
 import java.io.IOException;
 
 import java.math.BigDecimal;
 
 
+
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
+
     	Person A = new Person();
     	Person B = new Person();
     	Person C = new Person();
-    	A.SetPerson(12365,"Elizabet", Gender.FEMALE,LocalDate.parse("2000-08-05"), BigDecimal.valueOf(3400));
-    	B.SetPerson(4380,"Ann", Gender.FEMALE,LocalDate.parse("1995-09-01"), BigDecimal.valueOf(3400));
-		C.SetPerson(6401,"Andre", Gender.MALE,LocalDate.parse("2005-08-05"), BigDecimal.valueOf(3400));
+    	A.SetPerson(12365,"Elizabet", Gender.FEMALE,java.time.LocalDate.parse("2000-08-05"), BigDecimal.valueOf(3400));
+    	B.SetPerson(4380,"Ann", Gender.FEMALE,java.time.LocalDate.parse("1995-09-01"), BigDecimal.valueOf(3400));
+		C.SetPerson(6401,"Andre", Gender.MALE,java.time.LocalDate.parse("2005-08-05"), BigDecimal.valueOf(3400));
 	//Person A = new Person(12365,"Elizabet", Gender.FEMALE,"2000-08-05", BigDecimal.valueOf(3400));
 	//Person B = new Person(4380,"Ann", Gender.FEMALE,"1995-09-01", BigDecimal.valueOf(3400));
 	//Person C  = new Person(6401,"Andre", Gender.MALE,"2005-08-05", BigDecimal.valueOf(3400));
@@ -36,21 +37,21 @@ public class Main {
 	System.out.println("Сортировка");
 	List1.sortBy(Person.comparatorid);
 	List1.getPersonsData();
-	System.out.println("Сортировка2");
-	List1.sortBy(Person.comparatorid);
-	List1.getPersonsData();
+
 
 	Division div1 = new Division();
 	div1.setId(123);
 	div1.setName("GG");
-	A.setDivision(div1);
-	A.getDivision();
+	//A.setDivision(div1);
+	//A.getDivision();
+	JAXBmanager manager = new JAXBmanager();
+	manager.writeToXml();
 	//MyList list2 = new MyList();
-		Factory factory = new Factory();
+		/*Factory factory = new Factory();
 		IRepository<IPerson> list =  factory.createRepository(IPerson.class );
 	CsvLoader.parseList(list);
 	MyList<IPerson>base = (MyList<IPerson>)list;
-	base.getPersonsData();
+	base.getPersonsData();*/
 
 
 

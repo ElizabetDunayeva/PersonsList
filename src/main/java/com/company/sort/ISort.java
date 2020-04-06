@@ -10,5 +10,5 @@ import java.util.Comparator;
  */
 public interface ISort<T> {
 
-    void sort(final MyList<T> list,final Comparator<T> comparator);
+    void sort(MyList<T> list, Comparator<T> comparator);
 }

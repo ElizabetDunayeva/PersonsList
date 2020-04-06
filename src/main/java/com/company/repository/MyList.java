@@ -3,6 +3,7 @@ package com.company.repository;
 import com.company.InjectException;
 import com.company.Injector;
 
+import com.company.LabInject;
 import com.company.sort.ISort;
 
 import java.util.ArrayList;
@@ -10,16 +11,34 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.slf4j.Logger;
+import ru.vsu.lab.repository.IRepository;
+import ru.vsu.lab.entities.IPerson;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.annotation.*;
+
+
 /**
  * class for storaging information about persons
   *  massiv Persons
   * count - number of Persons
  */
-@SuppressWarnings("unchecked")
 
-public class MyList<T> implements IRepository<T> {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class MyList<T> implements ru.vsu.lab.repository.IRepository<T> {
+
+
+    private static final Logger LOG = LoggerFactory.getLogger(MyList.class);
+
+    @XmlElement(name="person")
     private T[] Persons ;
+    @XmlElement(name="personCount")
     private int count;
+
+    @XmlAnyElement
+    @LabInject
     private ISort<T> sorter;
 
 
@@ -41,22 +60,7 @@ public class MyList<T> implements IRepository<T> {
 
     }
 
-    /**
 
-    /*public T getin( int id)   {
-        int k = 0;
-        for (int i = 0; i < count; i++) {
-            if (Persons[i].getId== id) {
-                k += i + 1;
-            }
-        }
-        if (k == 0) {
-            throw new IllegalArgumentException("Такого обьекта нет!");
-        }
-       // System.out.println("Информация по запрошенному индекcу"+"  "+id);
-        getPersonsDataindex(k - 1);
-        return Persons[k - 1];
-    }*/
 
     public T get(int i) {
         return (T)Persons[i];
@@ -97,8 +101,10 @@ public class MyList<T> implements IRepository<T> {
      * @param p1 person which need to be added
      * @return new list  with added person
      */
-    @Override
+
     public void add(T p1) {
+
+        LOG.debug("[add,{}",p1);
 
         int col = Persons.length;
         count++;
@@ -115,6 +121,7 @@ public class MyList<T> implements IRepository<T> {
 
 
         }
+        LOG.debug("]");
 
 
     }
@@ -126,6 +133,8 @@ public class MyList<T> implements IRepository<T> {
      */
     public T delete(int id) {
 
+        LOG.debug("[delete: {}", id);
+
         int col = Persons.length;
         count--;
         T newPersons[] = (T[])new Object [col] ;
@@ -134,7 +143,7 @@ public class MyList<T> implements IRepository<T> {
         System.arraycopy(Persons, id+1, newPersons,  id , Persons.length - id - 1);
         Persons = newPersons;
 
-
+        LOG.debug("] return {}",Persons[id]);
 
       return Persons[id ];
 
@@ -161,6 +170,7 @@ public class MyList<T> implements IRepository<T> {
 
      public void add(int index, T person){
 
+        LOG.debug("[add on index:{} person {}]",index, person);
          int col = Persons.length;
          count++;
          if (count > Persons.length) {
@@ -190,8 +200,10 @@ public class MyList<T> implements IRepository<T> {
     }
 
     public T set(int index, T person){
+        LOG.debug("[set: {} {}", index, person);
         T temp = Persons[index];
         Persons[index] = person;
+        LOG.debug("]");
         return temp ;
     }
     public IRepository searchBy(Predicate<T> predicate){

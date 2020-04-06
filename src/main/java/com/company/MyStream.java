@@ -1,15 +1,14 @@
 package com.company;
 
-import com.company.Entities.IDivision;
-import com.company.Entities.IPerson;
-import com.company.repository.IRepository;
-import org.supercsv.cellprocessor.Collector;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import ru.vsu.lab.entities.IPerson;
+import ru.vsu.lab.entities.IDivision;
+import ru.vsu.lab.entities.enums.Gender;
+import ru.vsu.lab.repository.IRepository;
 
 public class MyStream <T extends IPerson>{
 

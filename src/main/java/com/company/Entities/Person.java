@@ -1,23 +1,36 @@
 package com.company.Entities;
 
-import org.joda.time.LocalDate;
+import com.company.JAXB.DateAdapter;
+
 import org.joda.time.Years;
 
+import java.time.Period;
+import java.time.Year;
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
+import ru.vsu.lab.entities.IPerson;
+import ru.vsu.lab.entities.IDivision;
+import ru.vsu.lab.entities.enums.Gender;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+@XmlRootElement(name="Person")
 public class Person implements IPerson {
 
     String firstname;
     String lastname;
     Gender pol;
     Integer ID;
-    LocalDate birthday;
+    java.time.LocalDate birthday;
     BigDecimal salary;
-    IDivision division;
+    Division division;
     public static final List<IDivision> allDivision = new ArrayList<>();
 
     /**
@@ -27,7 +40,7 @@ public class Person implements IPerson {
      * @param ID int number
      * @param birthday date as YYYY-MM-DD
      */
-   final public void SetPerson(final Integer ID,final String name, final Gender pol, final  LocalDate birthday,final BigDecimal salary) {
+   final public void SetPerson(final Integer ID, final String name, final Gender pol, final java.time.LocalDate birthday, final BigDecimal salary) {
         this.firstname = name;
         this.pol = pol;
         this.ID = ID;
@@ -43,8 +56,8 @@ public class Person implements IPerson {
             (IPerson a, IPerson b) -> (comparer(a,b));
 
    public static  int comparer(IPerson a,IPerson b){
-        LocalDate a1 = a.getBirthdate();
-        LocalDate b1 = b.getBirthdate();
+        java.time.LocalDate a1 = a.getBirthdate();
+        java.time.LocalDate b1 = b.getBirthdate();
         int rezult;
         if (a1.isBefore(b1)) {
             rezult = 1;
@@ -77,8 +90,8 @@ public class Person implements IPerson {
         return this.ID;
     }
 
-
-    public LocalDate getBirthdate() {
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    public java.time.LocalDate getBirthdate() {
         return birthday;
     }
 
@@ -102,7 +115,7 @@ public class Person implements IPerson {
     }
 
 
-    public void setBirthdate(LocalDate birthday) {
+    public void setBirthdate(java.time.LocalDate birthday) {
        this. birthday = birthday;
     }
     /** function
@@ -110,9 +123,12 @@ public class Person implements IPerson {
      * @return age as int number
      */
     public Integer getAge() {
-        LocalDate current = new LocalDate();
-        Years age = Years.yearsBetween(birthday, current);
-        return age.getYears();
+
+        LocalDate current = LocalDate.now();
+        Period period = Period.between(this.birthday,current);
+        int age = period.getYears();
+
+        return age;
     }
     public BigDecimal getSalary(){
         return salary;
@@ -122,16 +138,15 @@ public class Person implements IPerson {
         this.salary = salary;
 
     }
-
+    @XmlElement(type = Division.class)
     public IDivision getDivision(){
 
-        division.ToString();
         return division;
 
     }
 
     public void setDivision(IDivision division){
-       this.division = division;
+       this.division =(Division)division;
 
     }
 

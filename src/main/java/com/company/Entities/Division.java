@@ -1,7 +1,16 @@
 package com.company.Entities;
+import ru.vsu.lab.entities.IDivision;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Division implements IDivision {
+
     Integer id;
+
     String name;
     public Integer getId(){
 
@@ -26,12 +35,13 @@ public class Division implements IDivision {
 
     }
 
-
-    public  void ToString() {
-        System.out.println("Отдел");
-        System.out.println(this.id);
-        System.out.println(this.name);
-
-
+    @Override
+    public String toString() {
+        return "Division{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
+
+
 }

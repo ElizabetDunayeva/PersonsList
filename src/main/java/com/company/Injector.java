@@ -23,7 +23,7 @@ public class Injector<T> {
             System.out.println(field.getClass().getName());
             if (field.isAnnotationPresent(LabInject.class)) {
                 try {
-                    Class<?> seatedClass = Class.forName(prop.getProperty(ISort.class.getName()));
+                    Class<?> seatedClass = Class.forName(prop.getProperty("sortType"));
                     Object seatedClassObject = seatedClass.newInstance();
                     field.setAccessible(true);
                     field.set(rep, seatedClassObject);

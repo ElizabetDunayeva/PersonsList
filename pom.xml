@@ -8,6 +8,15 @@
     <artifactId>Laborat</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
+    <properties>
+        <java.version>1.8</java.version>
+        <githab.global.server>githab</githab.global.server>
+        <github.maven-plugin>0.12</github.maven-plugin>
+
+    </properties>
+
+
     <dependencies>
         <dependency>
             <groupId>joda-time</groupId>
@@ -30,33 +39,68 @@
             <artifactId>super-csv-joda</artifactId>
             <version>2.4.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>ru.vsu.labs</groupId>
+            <artifactId>task1</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>C:\Users\елизавета\Downloads\NCLab-master (2)\NCLab-master\Tasks\task1\target\task1-0.0.1-SNAPSHOT.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>2.11.2</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+
     </dependencies>
-<reporting>
-    <plugins>
-        <plugin>
+<build>
+    <pluginManagement>
+        <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-сheckstyle-plugin </artifactId>
+              <version>2.8.2</version>
+          </plugin>
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-сheckstyle-plugin</artifactId>
-            <version>3.0.0</version>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.5</version>
             <configuration>
-                <configLocation>checkstyle.xml</configLocation>
+                <source>1.8</source>
+                <target>1.8</target>
             </configuration>
         </plugin>
-    </plugins>
-</reporting>
-
-    <build>
-        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
             </plugin>
-        </plugins>
-    </build>
+
+   </plugins>
+    </pluginManagement>
+</build>
+
+
+
 
 
 
